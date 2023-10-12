@@ -4,7 +4,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				rubik: ['Rubik'],
+				rubik: ['Rubik Variable'],
 			}
 		},
 	},
