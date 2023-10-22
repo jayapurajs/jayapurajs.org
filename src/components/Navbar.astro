@@ -1,5 +1,5 @@
-<header x-data="{ userDropdownOpen: false, mobileNavOpen: false }" id="page-header" class="z-1 items-center">
-    <div class="mx-auto max-w-screen-xl border-b border-gray-200">
+<header id="page-header" class="z-1 items-center">
+    <div x-data="{ userDropdownOpen: false, mobileNavOpen: false, currentPath: window.location.pathname }" class="mx-auto max-w-screen-xl border-b border-gray-200">
       <div class="flex justify-between px-4 py-4">
         <div class="flex items-center">
           <!-- Logo -->
@@ -8,14 +8,21 @@
           </a>
           <!-- END Logo -->
           <nav class="hidden items-center space-x-2 lg:flex">
-            <a href="/" class="font-rubik group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 text-gray-800 transition duration-300 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100">
+            <a href="/" :class="currentPath === '/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'" 
+              class="font-rubik group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300">
               <span>Home</span>
             </a>
-            <a href="/events" class="font-rubik group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 text-gray-800 transition duration-300 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100">
+            <a href="/events" :class="currentPath === '/events' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'" 
+              class="font-rubik group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300">
               <span>Events</span>
             </a>
-            <a href="/code-of-conduct" class="font-rubik group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 text-gray-800 transition duration-300 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100">
+            <a href="/code-of-conduct" :class="currentPath === '/code-of-conduct' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'" 
+              class="font-rubik group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300">
               <span>Code of Conduct</span>
+            </a>
+            <a href="/about" :class="currentPath === '/about' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'" 
+              class="font-rubik group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300">
+              <span>About</span>
             </a>
           </nav>
         </div>
@@ -40,7 +47,7 @@
       </div>
   
       <!-- Mobile Navigation -->
-      <div x-cloak x-show="mobileNavOpen" x-data="{ isOpen: false, currentPath: window.location.pathname }" class="lg:hidden">
+      <div x-cloak x-show="mobileNavOpen" class="lg:hidden">
         <nav class="flex flex-col space-y-2 border-t py-4">
           <a href="/" :class="currentPath === '/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'" class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm">
             <span>Home</span>
@@ -50,6 +57,9 @@
           </a>
           <a href="/code-of-conduct" :class="currentPath === '/code-of-conduct' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'" class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm">
             <span>Code of Conduct</span>
+          </a>
+          <a href="/about" :class="currentPath === '/about' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'" class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm">
+            <span>About</span>
           </a>
         </nav>
       </div>
