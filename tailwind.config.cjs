@@ -5,6 +5,7 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				rubik: ['Rubik Variable'],
+				onest: ["Onest"]
 			}
 		},
 	},
