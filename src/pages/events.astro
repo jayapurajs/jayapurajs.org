@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
-  title="Discover the Latest Events and"
+  title="Discover the Latest Events and Meetups"
   description="Discover the latest and exciting events in Jayapura organized by the Jayapura JavaScript Community. Stay tuned for news about workshops, meetups, and conferences related to JavaScript and its ecosystem."
 >
   <main class="mx-auto max-w-screen-xl">
@@ -37,16 +37,85 @@ import Layout from "../layouts/Layout.astro";
         <p class="mt-1 text-gray-600">Discover the events we organize</p>
       </div>
 
-      <!-- No More Events Message -->
-      <div class="text-center mt-10">
-        <div class="inline-block bg-white border rounded-full">
-          <div class="py-3 px-4 flex items-center gap-x-2">
-            <p class="text-gray-600">
-              No upcoming events at the moment. Stay tuned for future
-              announcements.
+      <!-- Events Grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Event Card: Initial Meetup -->
+        <!-- Link to Instagram -->
+        <a
+          class="group flex flex-col h-full border border-gray-200 hover:shadow-sm transition-all duration-300 rounded-xl p-5 bg-white"
+          href="https://instagram.com/jayapurajs"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="aspect-w-16 aspect-h-11">
+            <!-- Placeholder Image: Replace this div with an <img src="..." /> if you have a flyer -->
+            <div
+              class="w-full h-48 bg-gradient-to-tr from-amber-200 to-yellow-400 rounded-xl flex items-center justify-center overflow-hidden"
+            >
+              <!-- Icon to represent meetup -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-16 w-16 text-white drop-shadow-sm transform group-hover:scale-110 transition-transform duration-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div class="my-6">
+            <h3
+              class="text-xl font-semibold text-gray-800 group-hover:text-amber-600 transition-colors"
+            >
+              Initial Community Meetup
+            </h3>
+            <p class="mt-3 text-gray-600 line-clamp-5">
+              Join us for the very first gathering of the Jayapura JavaScript
+              Community! We'll be discussing our roadmap, networking, and
+              sharing our love for JS.
             </p>
           </div>
-        </div>
+          <div
+            class="mt-auto flex items-center justify-between pt-4 border-t border-gray-100"
+          >
+            <div class="flex flex-col">
+              <span
+                class="text-xs text-gray-500 uppercase font-bold tracking-wide"
+              >
+                Date
+              </span>
+              <span class="text-sm font-semibold text-gray-800">
+                6 December 2025
+              </span>
+            </div>
+            <div
+              class="flex items-center gap-2 text-amber-600 font-medium text-sm group-hover:translate-x-1 transition-transform"
+            >
+              Details
+              <svg
+                class="w-4 h-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+        <!-- End Event Card -->
       </div>
     </div>
   </main>
