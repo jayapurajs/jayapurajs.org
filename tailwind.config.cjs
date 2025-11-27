@@ -4,8 +4,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				rubik: ['Rubik Variable'],
-				onest: ["Onest"]
+				inter: ['Inter Variable', 'sans-serif']
 			}
 		},
 	},

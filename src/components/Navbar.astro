@@ -1,62 +1,107 @@
 <header id="page-header" class="z-1 items-center">
-    <div x-data="{ userDropdownOpen: false, mobileNavOpen: false, currentPath: window.location.pathname }" class="mx-auto max-w-screen-xl border-b border-gray-200">
-      <div class="flex justify-between px-4 py-4">
-        <div class="flex items-center">
-          <!-- Logo -->
-          <a href="/" class="font-onest group inline-flex items-center space-x-2 bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-lg font-bold tracking-wide text-gray-900 text-transparent hover:text-gray-600 lg:hidden">
-            <span>JayapuraJS</span>
+  <div
+    x-data="{ userDropdownOpen: false, mobileNavOpen: false, currentPath: window.location.pathname }"
+    class="mx-auto max-w-screen-xl"
+  >
+    <div class="flex justify-between px-4 py-4">
+      <div class="flex items-center">
+        <!-- Logo -->
+
+        <a
+          href="/"
+          class="group inline-flex items-center space-x-2 bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-lg font-bold tracking-wide text-gray-900 text-transparent hover:text-gray-600 lg:hidden"
+        >
+          <span>JayapuraJS</span>
+        </a>
+
+        <nav class="hidden items-center space-x-2 lg:flex">
+          <a
+            href="/"
+            :class="currentPath === '/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'"
+            class="group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300"
+          >
+            <span>Home</span>
           </a>
-          <!-- END Logo -->
-          <nav class="hidden items-center space-x-2 lg:flex">
-            <a href="/" :class="currentPath === '/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'" 
-              class="font-onest group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300">
-              <span>Teras</span>
-            </a>
-            <a href="/acara/" :class="currentPath === '/acara/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'" 
-              class="font-onest group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300">
-              <span>Acara</span>
-            </a>
-            <a href="/tentang/" :class="currentPath === '/tentang/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'" 
-              class="font-onest group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300">
-              <span>Tentang</span>
-            </a>
-          </nav>
-        </div>
-  
-        <!-- Right Section -->
-        <div class="flex items-center space-x-2 lg:space-x-5">
-          <!-- Desktop Navigation -->
-          <nav class="hidden items-center space-x-2 lg:flex">
-            <a href="mailto:hello@jayapurajs.org" class="font-onest text-gray-500 transition duration-300 hover:text-amber-500 hover:underline">hello@jayapurajs.org</a>
-          </nav>
-          <!-- END Desktop Navigation -->
-  
-          <!-- Toggle Mobile Navigation -->
-          <div class="lg:hidden">
-            <button x-on:click="mobileNavOpen = !mobileNavOpen" type="button" class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none" aria-label="menu">
-              <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="hi-solid hi-menu inline-block h-5 w-5"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-            </button>
-          </div>
-          <!-- END Toggle Mobile Navigation -->
-        </div>
-        <!-- END Right Section -->
-      </div>
-  
-      <!-- Mobile Navigation -->
-      <div x-cloak x-show="mobileNavOpen" class="lg:hidden">
-        <nav class="flex flex-col space-y-2 border-t py-4">
-          <a href="/" :class="currentPath === '/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'" class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm">
-            <span>Teras</span>
+
+          <a
+            href="/events/"
+            :class="currentPath === '/events/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'"
+            class="group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300"
+          >
+            <span>Events</span>
           </a>
-          <a href="/acara/" :class="currentPath === '/acara/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'" class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm">
-            <span>Acara</span>
-          </a>
-          <a href="/tentang/" :class="currentPath === '/tentang/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'" class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm">
-            <span>Tentang</span>
+
+          <a
+            href="/about/"
+            :class="currentPath === '/about/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'"
+            class="group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300"
+          >
+            <span>About</span>
           </a>
         </nav>
       </div>
-      <!-- END Mobile Navigation -->
+
+      <!-- Right Section -->
+      <div class="flex items-center space-x-2 lg:space-x-5">
+        <!-- Desktop Navigation -->
+        <nav class="hidden items-center space-x-2 lg:flex">
+          <a
+            href="mailto:hello@jayapurajs.org"
+            class="text-gray-500 transition duration-300 hover:text-amber-500 hover:underline"
+            >hello@jayapurajs.org</a
+          >
+        </nav>
+
+        <!-- Toggle Mobile Navigation -->
+        <div class="lg:hidden">
+          <button
+            x-on:click="mobileNavOpen = !mobileNavOpen"
+            type="button"
+            class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none"
+            aria-label="menu"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+              class="hi-solid hi-menu inline-block h-5 w-5"
+              ><path
+                fill-rule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clip-rule="evenodd"></path></svg
+            >
+          </button>
+        </div>
+      </div>
     </div>
-  </header>
-  
+
+    <!-- Mobile Navigation -->
+    <div x-cloak x-show="mobileNavOpen" class="lg:hidden">
+      <nav class="flex flex-col space-y-2 border-t py-4">
+        <a
+          href="/"
+          :class="currentPath === '/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'"
+          class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm"
+        >
+          <span>Home</span>
+        </a>
+
+        <a
+          href="/events/"
+          :class="currentPath === '/events/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'"
+          class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm"
+        >
+          <span>Events</span>
+        </a>
+
+        <a
+          href="/about/"
+          :class="currentPath === '/about/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'"
+          class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm"
+        >
+          <span>About</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>

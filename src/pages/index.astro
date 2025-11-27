@@ -3,79 +3,83 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
-	title="Teras · Jayapura JavaScript User Group"
-	description="Mari datang dan baku dapat dengan smua pengembang yang tertarik dengan JavaScript dan Ekosistemnya di Jayapura. Kam pantau trus eh untuk kabar terbaru tentang acara-acara yang akan datang."
+  title="JavaScript Programming Language User Community in Jayapura"
+  description="Come and meet with all developers interested in JavaScript and its ecosystem in Jayapura. Stay tuned for the latest news about upcoming events."
 >
-	<main class="mx-auto max-w-screen-xl">
-		<!-- Hero -->
-		<div
-			class="relative overflow-hidden before:absolute before:left-1/2 before:top-0 before:-z-[1] before:h-full before:w-full before:-translate-x-1/2 before:transform before:bg-[url('./polygon.svg')] before:bg-cover before:bg-top before:bg-no-repeat"
-		>
-			<div class="mx-auto max-w-[85rem] px-4 pb-10 pt-16 sm:px-6 lg:px-8">
-				<!-- Icon Hero -->
-				<div class="flex justify-center">
-					<a href="/" class="sm:mx-auto" aria-label="Logo">
-						<div
-							class="bg-amber-100/60 flex items-center justify-center rounded-full"
-						>
-							<img
-								src="./logo-transparent.svg"
-								class="h-12 w-12"
-								alt="Logo JayapuraJS"
-							/>
-						</div>
-					</a>
-				</div>
-				<!-- End Icon Hero -->
+  <main class="mx-auto max-w-screen-xl">
+    <!-- Hero -->
+    <div
+      class="relative overflow-hidden before:absolute before:left-1/2 before:top-0 before:-z-[1] before:h-full before:w-full before:-translate-x-1/2 before:transform before:bg-[url('./polygon.svg')] before:bg-cover before:bg-top before:bg-no-repeat"
+    >
+      <div class="mx-auto max-w-[85rem] px-4 pb-10 pt-16 sm:px-6 lg:px-8">
+        <!-- Icon Hero -->
+        <div class="flex justify-center">
+          <a href="/" class="sm:mx-auto" aria-label="Logo">
+            <div
+              class="bg-amber-100/60 flex items-center justify-center rounded-full"
+            >
+              <img
+                src="./logo-transparent.svg"
+                class="h-44 w-44"
+                alt="JayapuraJS Logo"
+              />
+            </div>
+          </a>
+        </div>
+        <!-- End Icon Hero -->
 
-				<!-- Title -->
-				<div class="mx-auto mt-5 max-w-2xl text-center">
-					<h1
-						class="font-onest block text-4xl font-bold text-gray-800 md:text-5xl lg:text-6xl"
-					>
-						Jayapura
-						<span
-							class="bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-transparent"
-							>JavaScript</span
-						>
-						<br />
-						 User Group
-					</h1>
-				</div>
-				<!-- End Title -->
+        <!-- Title -->
+        <div class="mx-auto mt-5 max-w-2xl text-center">
+          <h1
+            class="font-inter block text-4xl font-bold text-gray-800 md:leading-tight md:text-5xl lg:text-6xl"
+          >
+            Jayapura
+            <span
+              class="bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-transparent"
+              >JavaScript</span
+            >
+            <br />
+            User Group
+          </h1>
+        </div>
+        <!-- End Title -->
 
-				<div class="mx-auto mt-5 max-w-3xl text-center">
-					<p class="font-onest text-lg text-gray-600">
-						Mari datang dan baku dapat dengan smua pengembang yang tertarik dengan JavaScript dan de pu ekosistem di Jayapura.
-						Kam pantau trus eh untuk kabar terbaru tentang acara-acara yang akan datang.
-					</p>
-				</div>
+        <div class="mx-auto mt-5 max-w-3xl text-center">
+          <p class="font-onest text-lg text-gray-600">
+            Come and meet with all developers interested in JavaScript and its
+            ecosystem in Jayapura. Stay tuned for the latest news about upcoming
+            events.
+          </p>
+        </div>
 
-				<!-- Buttons -->
-				<div
-					class="mt-8 grid w-full gap-3 sm:inline-flex sm:justify-center"
-				>
-					<a
-						class="font-onest inline-flex items-center justify-center gap-x-3.5 rounded-md border bg-indigo-500 px-4 py-2 text-center text-sm font-medium text-white shadow-sm transition hover:border-gray-300 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white lg:text-base"
-						href="https://join.jayapurajs.org/"
-						target="_blank"
-					>
-						Gabung ke Discord
-						 <svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							><path
-								fill="currentColor"
-								d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z"
-							></path></svg
-						></a
-					>
-				</div>
-				<!-- End Buttons -->
-			</div>
-		</div>
-		<!-- End Hero -->
-	</main>
+        <!-- Buttons -->
+        <div class="mt-8 grid w-full gap-3 sm:inline-flex sm:justify-center">
+          <a
+            class="font-onest inline-flex items-center justify-center gap-x-3.5
+          rounded-md border bg-indigo-500 px-4 py-2 text-center text-sm
+          font-medium text-white shadow-sm transition hover:border-gray-300
+          hover:bg-indigo-600 focus:outline-none focus:ring-2
+          focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white
+          lg:text-base"
+            href="https://join.jayapurajs.org/"
+            target="_blank"
+          >
+            Join Discord
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              ><path
+                fill="currentColor"
+                d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z"
+              ></path></svg
+            >
+          </a>
+        </div>
+        <!-- End Buttons -->
+      </div>
+    </div>
+    <!-- End Hero -->
+  </main>
 </Layout>
