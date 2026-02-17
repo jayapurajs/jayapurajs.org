@@ -1,0 +1,19 @@
+---
+const { event } = Astro.props;
+---
+
+<section class="space-y-8">
+  <header class="space-y-3">
+    <span class="inline-block px-3 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-full text-xs font-semibold">
+      Workshop • {event.date}
+    </span>
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+      {event.title}
+    </h1>
+    <p class="text-gray-600 dark:text-gray-400 text-base leading-relaxed">
+      Workshop ini fokus memperkuat fundamental JavaScript dengan contoh praktis dan latihan langsung.
+    </p>
+  </header>
+
+  <!-- isi khusus workshop -->
+</section>

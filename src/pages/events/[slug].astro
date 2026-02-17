@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { events } from '../../data/events';
+import MeetupContent from '../../content/events/initial-community-meetup.astro';
+import WorkshopContent from '../../content/events/javascript-workshop.astro';
+
+export async function getStaticPaths() {
+  return events.map(event => ({
+    params: { slug: event.slug },
+    props: { event },
+  }));
+}
+
+const { event } = Astro.props;
+const isMeetup = event.slug === "event-1"; 
+const isWorkshop = event.slug === "javascript-workshop";
+---
+
+<Layout title={`${event.title} - Jayapura JS`} description={event.desc}>
+  <main class="max-w-4xl mx-auto px-6 py-16 md:px-8 lg:px-12">
+    {/* Tombol Kembali */}
+    <a
+      href="/events"
+      class="inline-flex items-center gap-2 mb-10 text-gray-600 hover:text-amber-600 dark:text-gray-400 dark:hover:text-amber-400 transition-colors duration-200 font-medium group"
+    >
+      <svg
+        class="w-4 h-4 group-hover:-translate-x-1 transition-transform"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Kembali ke Events
+    </a>
+
+    {isMeetup && <MeetupContent event={event} />}
+    {isWorkshop && <WorkshopContent event={event} />}
+  </main>
+</Layout>

@@ -1,107 +1,165 @@
-<header id="page-header" class="z-1 items-center">
-  <div
-    x-data="{ userDropdownOpen: false, mobileNavOpen: false, currentPath: window.location.pathname }"
-    class="mx-auto max-w-screen-xl"
-  >
-    <div class="flex justify-between px-4 py-4">
-      <div class="flex items-center">
-        <!-- Logo -->
+---
+// 1. IMPORT HARUS DI SINI AGAR TIDAK EROR
+import ThemeToggle from "../service/ThemeToggle.astro";
+---
 
-        <a
-          href="/"
-          class="group inline-flex items-center space-x-2 bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-lg font-bold tracking-wide text-gray-900 text-transparent hover:text-gray-600 lg:hidden"
-        >
-          <span>JayapuraJS</span>
-        </a>
-
-        <nav class="hidden items-center space-x-2 lg:flex">
-          <a
-            href="/"
-            :class="currentPath === '/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'"
-            class="group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300"
-          >
-            <span>Home</span>
-          </a>
-
-          <a
-            href="/events/"
-            :class="currentPath === '/events/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'"
-            class="group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300"
-          >
-            <span>Events</span>
-          </a>
-
-          <a
-            href="/about/"
-            :class="currentPath === '/about/' ? 'bg-amber-50 text-amber-400' : ' text-gray-800 hover:bg-amber-50 hover:text-amber-400 active:border-amber-100'"
-            class="group flex items-center space-x-2 rounded-lg border border-transparent px-3 py-1 transition duration-300"
-          >
-            <span>About</span>
-          </a>
-        </nav>
-      </div>
-
-      <!-- Right Section -->
-      <div class="flex items-center space-x-2 lg:space-x-5">
-        <!-- Desktop Navigation -->
-        <nav class="hidden items-center space-x-2 lg:flex">
-          <a
-            href="mailto:hello@jayapurajs.org"
-            class="text-gray-500 transition duration-300 hover:text-amber-500 hover:underline"
-            >hello@jayapurajs.org</a
-          >
-        </nav>
-
-        <!-- Toggle Mobile Navigation -->
-        <div class="lg:hidden">
-          <button
-            x-on:click="mobileNavOpen = !mobileNavOpen"
-            type="button"
-            class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none"
-            aria-label="menu"
-          >
-            <svg
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-              class="hi-solid hi-menu inline-block h-5 w-5"
-              ><path
-                fill-rule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"></path></svg
-            >
-          </button>
-        </div>
-      </div>
+<header
+  id="page-header"
+  x-data="{ 
+    mobileNavOpen: false, 
+    currentPath: '', 
+    isScrolled: false 
+  }"
+  x-init="
+    currentPath = window.location.pathname;
+    window.addEventListener('scroll', () => { isScrolled = window.scrollY > 10 });
+    document.addEventListener('astro:after-navigation', () => { 
+      currentPath = window.location.pathname; 
+      mobileNavOpen = false;
+    });
+    $watch('mobileNavOpen', value => { 
+      document.body.style.overflow = value ? 'hidden' : 'auto' 
+    });
+  "
+  @keydown.escape.window="mobileNavOpen = false"
+  :class="[
+    'fixed top-0 left-0 right-0 z-50 w-full border-b transition-all duration-500 ease-in-out',
+    isScrolled 
+      ? 'bg-white/80 dark:bg-gray-900/80 border-gray-200/50 dark:border-gray-800/50 shadow-md backdrop-blur-lg py-1' 
+      : 'bg-white/95 dark:bg-gray-900 border-transparent py-3'
+  ]"
+>
+  <div class="mx-auto max-w-[85rem] w-full px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-end gap-x-3 pt-1 mb-2">
+      <ThemeToggle />
+      <a
+        href="mailto:hello@jayapurajs.org"
+        class="text-[10px] md:text-xs text-gray-500 transition duration-300 hover:text-amber-500"
+      >
+        hello@jayapurajs.org
+      </a>
     </div>
 
-    <!-- Mobile Navigation -->
-    <div x-cloak x-show="mobileNavOpen" class="lg:hidden">
-      <nav class="flex flex-col space-y-2 border-t py-4">
+    <nav class="flex items-center justify-between gap-3">
+      <a href="/" class="flex items-center group transition-all active:scale-95 outline-none">
+        <div class="relative h-10 pb-4 md:h-12 flex items-center">
+          <img
+            src="/jayapurajs-v2-transparent.png"
+            class="h-36 w-36 object-contain transition-all duration-300 
+                   filter drop-shadow-[0_0_8px_rgba(0,0,0,0.6)] 
+                   dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]
+                   group-hover:scale-105"
+            alt="Jayapura JavaScript"
+          />
+        </div>
+      </a>
+
+      <div class="hidden md:flex items-center gap-1">
         <a
           href="/"
-          :class="currentPath === '/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'"
-          class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm"
+          :class="currentPath === '/' ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'"
+          class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200"
         >
-          <span>Home</span>
+          Home
         </a>
-
         <a
           href="/events/"
-          :class="currentPath === '/events/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'"
-          class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm"
+          :class="currentPath.startsWith('/events') ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'"
+          class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200"
         >
-          <span>Events</span>
+          Events
         </a>
-
         <a
           href="/about/"
-          :class="currentPath === '/about/' ? 'font-semibold text-blue-600 border border-blue-50 bg-blue-50' : 'font-medium text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100'"
-          class="group flex items-center space-x-2 rounded-lg px-3 py-2 text-sm"
+          :class="currentPath.startsWith('/about') ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'"
+          class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200"
         >
-          <span>About</span>
+          About
         </a>
-      </nav>
-    </div>
+      </div>
+
+      <button
+        @click="mobileNavOpen = !mobileNavOpen"
+        type="button"
+        class="md:hidden p-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all active:scale-90"
+        aria-label="Toggle menu"
+      >
+        <svg x-show="!mobileNavOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+        </svg>
+        <svg x-show="mobileNavOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </nav>
   </div>
+
+  <template x-teleport="body">
+    <div x-show="mobileNavOpen" class="fixed inset-0 z-[100] md:hidden" x-cloak>
+      <div 
+        x-show="mobileNavOpen"
+        x-transition:enter="transition-opacity duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition-opacity duration-300"
+        @click="mobileNavOpen = false"
+        class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm"
+      ></div>
+
+      <div 
+        x-show="mobileNavOpen"
+        x-transition:enter="transition duration-500 cubic-bezier(0.4, 0, 0.2, 1) transform"
+        x-transition:enter-start="-translate-x-full"
+        x-transition:enter-end="translate-x-0"
+        x-transition:leave="transition duration-300 transform"
+        x-transition:leave-start="translate-x-0"
+        x-transition:leave-end="-translate-x-full"
+        class="fixed top-0 left-0 bottom-0 w-[280px] bg-white dark:bg-gray-900 p-6 shadow-2xl overflow-y-auto border-r dark:border-gray-800"
+      >
+        <div class="flex items-center justify-between mb-4">
+          <!-- <div class="font-bold  text-amber-600 uppercase tracking-tighter">Jayapura JS</div> -->
+        <div class="relative h-10 pb-4 pt-4 md:h-12 flex items-center">
+          <img
+            src="/jayapurajs-v2-transparent.png"
+            class="h-36 w-36 object-contain transition-all duration-300 
+                   filter drop-shadow-[0_0_8px_rgba(0,0,0,0.6)] 
+                   dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]
+                   group-hover:scale-105"
+            alt="Jayapura JavaScript"
+          />
+        </div>
+
+          <button @click="mobileNavOpen = false" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+          <div class="">
+            <div class="border-t pb-2 border-gray-200 dark:border-neutral-800"></div>
+          </div>
+        <nav class="flex flex-col gap-2">
+          <a
+            href="/"
+            :class="currentPath === '/' ? 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' : 'text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800'"
+            class="px-4 py-3 rounded-xl font-bold transition-all"
+          > Home </a>
+          <a
+            href="/events/"
+            :class="currentPath.startsWith('/events') ? 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' : 'text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800'"
+            class="px-4 py-3 rounded-xl font-bold transition-all"
+          > Events </a>
+          <a
+            href="/about/"
+            :class="currentPath.startsWith('/about') ? 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' : 'text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800'"
+            class="px-4 py-3 rounded-xl font-bold transition-all"
+          > About </a>
+        </nav>
+      </div>
+    </div>
+  </template>
 </header>
+
+<div class="h-[76px] md:h-[90px]"></div>
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>

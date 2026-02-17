@@ -1,0 +1,119 @@
+---
+const { event } = Astro.props;
+
+const speakers = [
+  {
+    name: "Thesis Andatu",
+    topic: "Computational Thinking",
+    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&h=300&auto=format&fit=crop", 
+    desc: "Logika pemecahan masalah kompleks."
+  },
+  {
+    name: "Fidel Silak",
+    topic: "Fundamental JavaScript",
+    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&h=300&auto=format&fit=crop",
+    desc: "Fondasi sintaks & ekosistem JS modern."
+  }
+];
+---
+
+<article class="max-w-4xl mx-auto px-6 py-10 bg-white dark:bg-slate-950 transition-colors duration-500">
+  
+  <header class="border-b border-slate-900 dark:border-white pb-8 mb-10">
+    <div class="flex justify-between items-center mb-4">
+      <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 uppercase tracking-widest">
+        {event.category}
+      </span>
+      <p class="text-slate-500 font-bold text-xs uppercase tracking-wider">{event.date} — {event.time || '15:00 WIT'}</p>
+    </div>
+
+    <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 dark:text-white leading-tight mb-4 uppercase">
+      {event.title}
+    </h1>
+
+    <div class="grid md:grid-cols-12 gap-6">
+      <div class="md:col-span-8">
+        <p class="text-lg text-slate-600 dark:text-slate-400 leading-snug">
+          {event.desc}
+        </p>
+      </div>
+      <div class="md:col-span-4 flex items-center md:justify-end">
+        <a href={event.link} class="text-sm font-bold bg-slate-900 dark:bg-amber-500 text-white dark:text-slate-900 px-6 py-3 rounded-lg hover:opacity-90 transition-all">
+          Daftar Sekarang →
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="mb-16">
+    <h2 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-3">
+      The Mentors <span class="h-px w-8 bg-slate-200"></span>
+    </h2>
+
+    <div class="grid grid-cols-2 gap-6 md:gap-10">
+      {speakers.map((s) => (
+        <div class="group flex flex-col md:flex-row gap-4 items-start">
+          <div class="w-24 h-24 md:w-32 md:h-32 shrink-0 overflow-hidden rounded-xl bg-slate-100">
+            <img 
+              src={s.img} 
+              alt={s.name} 
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+          </div>
+          
+          <div class="space-y-1">
+            <p class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-tighter">{s.topic}</p>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white leading-none">
+              {s.name}
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-tight line-clamp-2">
+              {s.desc}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl">
+    <h2 class="text-[10px] font-black tracking-widest uppercase text-slate-400 mb-6">Agenda</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+      {[
+        { time: "15:00", title: "Doors Open", sub: "Gathering" },
+        { time: "15:30", title: "Logic Session", sub: "Computational Thinking" },
+        { time: "16:30", title: "Code Session", sub: "JS Fundamentals" },
+        { time: "17:00", title: "Networking", sub: "Closing" }
+      ].map((item) => (
+        <div class="flex items-center gap-4 py-2 border-b border-slate-200 dark:border-slate-800 last:border-0">
+          <span class="font-mono text-sm font-bold text-amber-500">{item.time}</span>
+          <div>
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase leading-none">{item.title}</h4>
+            <p class="text-[10px] text-slate-500 font-medium italic">{item.sub}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</article>
+
+<style>
+  /* Menghilangkan animasi berlebihan agar terasa lebih "clean" dan ringan */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  article {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  /* Mengurangi hambatan visual pada scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+  }
+</style>

@@ -1,14 +1,15 @@
-<footer class="sticky top-[100vh] p-4 sm:p-6">
-  <div class="mx-auto max-w-screen-xl">
-    <div
-      class="border-t border-gray-200 pt-6 sm:flex sm:items-center sm:justify-between lg:pt-8"
-    >
-      <span class="text-sm text-gray-500 sm:text-center"
-        >&copy; 2026 JayapuraJS
-      </span>
-      <div class="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
+<footer class="w-full max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 mb-6">
+  <div class="py-6 border-t border-gray-200 dark:border-gray-800">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div>
+        <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+          © {new Date().getFullYear()} JayapuraJS.
+        </p>
+      </div>
+      <ul class="flex flex-wrap items-center gap-x-4">
+        <li class="inline-block">
         <a
-          href="https://instagram.com/jayapura.js"
+          href="https://www.instagram.com/jayapurajs/"
           target="_blank"
           class="text-gray-500 transition duration-300 hover:text-gray-900"
           aria-label="Instagram"
@@ -24,6 +25,9 @@
             ></path>
           </svg>
         </a>
+        </li>
+        <li class="inline-block">
+
         <a
           href="https://github.com/jayapurajs"
           target="_blank"
@@ -41,7 +45,8 @@
               clip-rule="evenodd"></path></svg
           >
         </a>
+        </li>
+      </ul>
       </div>
-    </div>
   </div>
 </footer>
