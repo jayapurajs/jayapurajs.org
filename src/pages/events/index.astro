@@ -7,9 +7,8 @@ import { events } from "../../data/events";
   title="Events - Jayapura JavaScript Community"
   description="Discover the latest workshops, meetups, and conferences related to JavaScript in Jayapura."
 >
-  <main class="relative mx-auto w-full max-w-6xl min-h-screen overflow-hidden px-4 sm:px-6 lg:px-8 bg-white">
+  <main class="relative mx-auto w-full max-w-6xl min-h-screen px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
     <div class="absolute top-0 left-1/2 -z-10 w-[600px] h-[600px] -translate-x-1/2 rounded-full bg-amber-200/30 blur-[100px] opacity-70 animate-pulse-slow"></div>
-    <div class="absolute bottom-0 right-0 -z-10 w-[400px] h-[400px] rounded-full bg-yellow-100/40 blur-[80px]"></div>
 
     <div class="py-16 text-center">
       <div class="animate-fade-in-up">
@@ -19,66 +18,72 @@ import { events } from "../../data/events";
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight">
           Upcoming <span class="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">Events</span>
         </h1>
+        <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600 leading-relaxed">
+          Stay tuned for our latest meetups, workshops, and sharing sessions. 
+          Join us to learn, collaborate, and grow together.
+        </p>
       </div>
     </div>
 
-    <div class="pb-24">
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {events.map((event, index) => (
-          <div
-            class="group relative flex flex-col h-full bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden animate-fade-in-up"
-            style={`animation-delay: ${index * 150}ms`}
-          >
-            <div class="relative w-full h-52 sm:h-60 overflow-hidden rounded-t-xl cursor-zoom-in">
-              <img
-                src={event.image}
-                alt={event.title}
-                class="event-img w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out"
-                loading="lazy"
-                onclick={`openLightbox('${event.image}', '${event.title}')`}
-              />
-              <div class="absolute inset-0 bg-black/5 pointer-events-none"></div>
-              <span class="absolute top-3 left-3 px-2 py-1 text-[10px] font-bold text-amber-900 bg-white/90 backdrop-blur-sm rounded-md shadow-sm uppercase tracking-wider pointer-events-none">
+    <div class="pb-24 space-y-8">
+      {events.map((event, index) => (
+        <div
+          class="group relative flex flex-col md:flex-row bg-white border border-gray-100 rounded-3xl shadow-sm hover:shadow-md transition-all duration-500 overflow-hidden animate-fade-in-up"
+          style={`animation-delay: ${index * 150}ms`}
+        >
+          <div class="md:w-2/5 h-64 md:h-auto overflow-hidden relative">
+            <img
+              src={event.image}
+              alt={event.title}
+              class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out cursor-zoom-in"
+              loading="lazy"
+              onclick={`openLightbox('${event.image}', '${event.title}')`}
+            />
+            <div class="absolute top-4 left-4">
+              <span class="px-3 py-1 text-[10px] font-bold text-amber-900 bg-white/90 backdrop-blur-sm rounded-full shadow-sm uppercase">
                 {event.category}
               </span>
             </div>
+          </div>
 
-            <div class="flex flex-col flex-1 p-6">
-              <h3 class="text-xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors mb-2 line-clamp-2 uppercase">
-                {event.title}
-              </h3>
-              <p class="text-gray-600 leading-relaxed mb-6 text-sm line-clamp-2">
-                {event.desc}
-              </p>
-              <div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
-                <div class="flex flex-col">
-                  <span class="text-[10px] uppercase text-gray-400 font-bold tracking-widest">Date</span>
-                  <span class="text-sm font-bold text-gray-800">{event.date}</span>
-                </div>
-                <a href={`/events/${event.slug}`} class="inline-flex items-center gap-2 text-sm font-bold text-amber-600 hover:underline">
-                  Details
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                </a>
+          <div class="md:w-3/5 p-8 flex flex-col justify-center">
+              <div class="flex items-center gap-2 mb-3 text-amber-600 text-sm font-bold uppercase tracking-widest">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor font-bold"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              {event.date}
+            </div>
+
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors mb-4 leading-tight">
+              {event.title}
+            </h3>
+            
+            <p class="text-gray-600 leading-relaxed mb-6 line-clamp-2 md:line-clamp-none text-sm md:text-base">
+              {event.desc}
+            </p>
+            <div class="mt-auto flex items-center justify-between border-t border-gray-50 pt-6">
+               <div class="flex items-center text-gray-500 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <span>{event.location}</span>
               </div>
+              
+              <a href={`/events/${event.slug}`} class="inline-flex items-center md:text-sm gap-2 px-6 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-xl hover:bg-amber-500 transition-all hover:shadow-lg active:scale-95">
+                View Event
+              </a>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   </main>
 
-  <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out animate-fade-in" onclick="closeLightbox()">
-    <button class="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors" onclick="closeLightbox()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
+  <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out animate-fade-in" onclick="closeLightbox()">
+    <button class="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
     </button>
-    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl transition-transform duration-300 scale-95" />
+    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[85vh] rounded-xl shadow-2xl transition-transform duration-300 scale-95" />
   </div>
 </Layout>
 
-<script is:inline>
-  function openLightbox(src, title) {
+<script is:inline>   function openLightbox(src, title) {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     img.src = src;
@@ -102,11 +107,9 @@ import { events } from "../../data/events";
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeLightbox();
-  });
+  }); 
 </script>
-
-<style>
-  @keyframes fadeIn {
+<style>  @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
@@ -126,5 +129,4 @@ import { events } from "../../data/events";
   }
   .animate-pulse-slow {
     animation: pulseSlow 6s ease-in-out infinite;
-  }
-</style>
+  } </style>

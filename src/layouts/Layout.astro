@@ -14,7 +14,7 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <BaseHead title={title} description={description} />
 
@@ -29,9 +29,13 @@ const { title, description } = Astro.props;
       }
     </script>
   </head>
-  <body class="font-inter min-h-screen bg-white text-gray-900 ">
+  <body class="font-inter min-h-screen bg-white text-gray-900 flex flex-col ">
     <Header />
-    <slot />
+    
+    <main class="flex-grow">
+      <slot />
+    </main>
+    
     <BackToTop />
     <Footer />
   </body>
