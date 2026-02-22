@@ -1,13 +1,14 @@
-
 <header
   id="page-header"
   x-data="{ 
     mobileNavOpen: false, 
-    currentPath: '', 
-    isScrolled: false 
+    currentPath: window.location.pathname,
+    isScrolled: false,
+    closeMobileNav() {
+      this.mobileNavOpen = false;
+    }
   }"
   x-init="
-    currentPath = window.location.pathname;
     window.addEventListener('scroll', () => { isScrolled = window.scrollY > 10 });
     document.addEventListener('astro:after-navigation', () => { 
       currentPath = window.location.pathname; 
@@ -17,151 +18,166 @@
       document.body.style.overflow = value ? 'hidden' : 'auto' 
     });
   "
-  @keydown.escape.window="mobileNavOpen = false"
-  :class="[
-    'fixed top-0 left-0 right-0 z-50 w-full border-b transition-all duration-500 ease-in-out',
-    isScrolled 
-      ? 'bg-white/80 border-gray-200/50 shadow-md backdrop-blur-lg py-1' 
-      : 'bg-white/95 border-transparent py-3'
-  ]"
+  @keydown.escape.window="closeMobileNav"
+  :class="isScrolled ? 'border-b border-neutral-200' : ''"
+  class="fixed top-0 left-0 right-0 z-50 w-full bg-white py-3"
 >
   <div class="mx-auto max-w-[85rem] w-full px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-end gap-x-3 pt-1 mb-2">
-      <a
-        href="mailto:hello@jayapurajs.org"
-        class="text-[10px] md:text-xs text-gray-500 transition duration-300 hover:text-amber-500"
-      >
-        hello@jayapurajs.org
-      </a>
-    </div>
-
+    <!-- Main navigation -->
     <nav class="flex items-center justify-between gap-3">
-      <a href="/" class="flex items-center group transition-all active:scale-95 outline-none">
-        <div class="relative h-10 pb-4 md:h-12 flex items-center">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="flex items-center group transition-all active:scale-95 outline-none"
+      >
+        <div class="relative h-10 md:h-12 flex items-center">
           <img
-            src="/jayapurajs-v1-transparent.png"
+            src="/images/logo/jayapurajs-light-transparent.png"
             class="h-36 w-36"
             alt="Jayapura JavaScript"
           />
         </div>
       </a>
 
-<div class="hidden md:flex items-center gap-2">
-  <a
-    href="/"
-    :class="currentPath === '/' ? 'bg-amber-50 text-amber-700' : 'text-gray-600 hover:bg-gray-100'"
-    class="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 -960 960 960" fill="currentColor"><path d="M160-160v-375l-72 55-47-63 439-337 440 336-48 64-392-300-240 184v356h160v80H160Zm540 95q-42 29-92.5 24.5T521-81q-36-36-40.5-86.5T505-260q-29-42-24.5-92.5T521-439q36-36 86.5-40.5T700-455q42-29 92.5-24.5T879-439q36 36 40.5 86.5T895-260q29 42 24.5 92.5T879-81q-36 36-86.5 40.5T700-65Zm0-98 46 32q18 13 39 11t37-18q16-16 18-37t-11-39l-32-46 32-46q13-18 11-39t-18-37q-16-16-37-18t-39 11l-46 32-46-32q-18-13-39-11t-37 18q-16 16-18 37t11 39l32 46-32 46q-13 18-11 39t18 37q16 16 37 18t39-11l46-32Zm35.5-61.5Q750-239 750-260t-14.5-35.5Q721-310 700-310t-35.5 14.5Q650-281 650-260t14.5 35.5Q679-210 700-210t35.5-14.5ZM480-470Zm220 210Z"/></svg>
-    Home
-  </a>
+      <!-- Desktop navigation (text only) -->
+      <div class="hidden md:flex items-center gap-6">
+        <a
+          href="/"
+          :class="currentPath === '/' ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
+          class="px-1 py-2 text-sm font-medium"
+        >
+          Home
+        </a>
+        <a
+          href="/events/"
+          :class="currentPath.startsWith('/events') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
+          class="px-1 py-2 text-sm font-medium"
+        >
+          Events
+        </a>
+        <a
+          href="/about/"
+          :class="currentPath.startsWith('/about') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
+          class="px-1 py-2 text-sm font-medium"
+        >
+          About
+        </a>
+      </div>
 
-  <a
-    href="/events/"
-    :class="currentPath.startsWith('/events') ? 'bg-amber-50 text-amber-700' : 'text-gray-600 hover:bg-gray-100'"
-    class="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 -960 960 960" fill="currentColor"><path d="M600-80v-80h160v-400H200v160h-80v-320q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H600ZM320 0l-56-56 103-104H40v-80h327L264-344l56-56 200 200L320 0ZM200-640h560v-80H200v80Zm0 0v-80 80Z"/></svg>
-    Events
-  </a>
-
-  <a
-    href="/about/"
-    :class="currentPath.startsWith('/about') ? 'bg-amber-50 text-amber-700' : 'text-gray-600 hover:bg-gray-100'"
-    class="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 -960 960 960" fill="currentColor"><path d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-    About
-  </a>
-</div>
+      <!-- Mobile menu button -->
       <button
         @click="mobileNavOpen = !mobileNavOpen"
         type="button"
-        class="md:hidden p-2 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50 transition-all active:scale-90"
+        class="md:hidden p-2 rounded-lg border border-neutral-200 text-neutral-800 hover:bg-neutral-50 transition-all active:scale-90"
         aria-label="Toggle menu"
+        :aria-expanded="mobileNavOpen"
       >
-        <svg x-show="!mobileNavOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+        <svg
+          x-show="!mobileNavOpen"
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
-        <svg x-show="mobileNavOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        <svg
+          x-show="mobileNavOpen"
+          x-cloak
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </nav>
-  </div>
 
-  <template x-teleport="body">
-    <div x-show="mobileNavOpen" class="fixed inset-0 z-[100] md:hidden" x-cloak>
-      <div 
-        x-show="mobileNavOpen"
-        x-transition:enter="transition-opacity duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition-opacity duration-300"
-        @click="mobileNavOpen = false"
-        class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm"
-      ></div>
+    <!-- Mobile dropdown menu (with icons) -->
+    <div
+      x-show="mobileNavOpen"
+      x-cloak
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 -translate-y-2"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden absolute left-0 right-0 top-full mt-2 mx-4 bg-white rounded-xl shadow-lg border border-neutral-100 overflow-hidden"
+    >
+      <nav class="flex flex-col p-2">
+        <!-- Home -->
+        <a
+          href="/"
+          @click="closeMobileNav"
+          :class="currentPath === '/' ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'"
+          class="flex items-center gap-3 px-4 py-3 font-bold"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            viewBox="0 -960 960 960"
+            fill="currentColor"
+          >
+            <path
+              d="M160-160v-375l-72 55-47-63 439-337 440 336-48 64-392-300-240 184v356h160v80H160Zm540 95q-42 29-92.5 24.5T521-81q-36-36-40.5-86.5T505-260q-29-42-24.5-92.5T521-439q36-36 86.5-40.5T700-455q42-29 92.5-24.5T879-439q36 36 40.5 86.5T895-260q29 42 24.5 92.5T879-81q-36 36-86.5 40.5T700-65Zm0-98 46 32q18 13 39 11t37-18q16-16 18-37t-11-39l-32-46 32-46q13-18 11-39t-18-37q-16-16-37-18t-39 11l-46 32-46-32q-18-13-39-11t-37 18q-16 16-18 37t11 39l32 46-32 46q-13 18-11 39t18 37q16 16 37 18t39-11l46-32Zm35.5-61.5Q750-239 750-260t-14.5-35.5Q721-310 700-310t-35.5 14.5Q650-281 650-260t14.5 35.5Q679-210 700-210t35.5-14.5ZM480-470Zm220 210Z"
+            ></path>
+          </svg>
+          <span>Home</span>
+        </a>
 
-      <div 
-        x-show="mobileNavOpen"
-        x-transition:enter="transition duration-500 cubic-bezier(0.4, 0, 0.2, 1) transform"
-        x-transition:enter-start="-translate-x-full"
-        x-transition:enter-end="translate-x-0"
-        x-transition:leave="transition duration-300 transform"
-        x-transition:leave-start="translate-x-0"
-        x-transition:leave-end="-translate-x-full"
-        class="fixed top-0 left-0 bottom-0 w-[280px] bg-white p-6 shadow-2xl overflow-y-auto border-r border-gray-100"
-      >
-        <div class="flex items-center justify-between mb-4">
-          <div class="relative h-10 pb-4 pt-4 md:h-12 flex items-center">
-            <img
-              src="/jayapurajs-v1-transparent.png"
-              class="h-36 w-36"
-              alt="Jayapura JavaScript"
-            />
-          </div>
+        <!-- Events -->
+        <a
+          href="/events/"
+          @click="closeMobileNav"
+          :class="currentPath.startsWith('/events') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'"
+          class="flex items-center gap-3 px-4 py-3 font-bold"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            viewBox="0 -960 960 960"
+            fill="currentColor"
+          >
+            <path
+              d="M600-80v-80h160v-400H200v160h-80v-320q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H600ZM320 0l-56-56 103-104H40v-80h327L264-344l56-56 200 200L320 0ZM200-640h560v-80H200v80Zm0 0v-80 80Z"
+            ></path>
+          </svg>
+          <span>Events</span>
+        </a>
 
-          <button @click="mobileNavOpen = false" class="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-        
-        <div class="border-t pb-2 border-gray-100"></div>
-<nav class="flex flex-col gap-2">
-  <a
-    href="/"
-    :class="currentPath === '/' ? 'bg-amber-50 text-amber-700' : 'text-gray-700 hover:bg-amber-50'"
-    class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960" fill="currentColor"><path d="M160-160v-375l-72 55-47-63 439-337 440 336-48 64-392-300-240 184v356h160v80H160Zm540 95q-42 29-92.5 24.5T521-81q-36-36-40.5-86.5T505-260q-29-42-24.5-92.5T521-439q36-36 86.5-40.5T700-455q42-29 92.5-24.5T879-439q36 36 40.5 86.5T895-260q29 42 24.5 92.5T879-81q-36 36-86.5 40.5T700-65Zm0-98 46 32q18 13 39 11t37-18q16-16 18-37t-11-39l-32-46 32-46q13-18 11-39t-18-37q-16-16-37-18t-39 11l-46 32-46-32q-18-13-39-11t-37 18q-16 16-18 37t11 39l32 46-32 46q-13 18-11 39t18 37q16 16 37 18t39-11l46-32Zm35.5-61.5Q750-239 750-260t-14.5-35.5Q721-310 700-310t-35.5 14.5Q650-281 650-260t14.5 35.5Q679-210 700-210t35.5-14.5ZM480-470Zm220 210Z"/></svg>
-    <span>Home</span>
-  </a>
-
-  <a
-    href="/events/"
-    :class="currentPath.startsWith('/events') ? 'bg-amber-50 text-amber-700' : 'text-gray-700 hover:bg-amber-50'"
-    class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960" fill="currentColor"><path d="M600-80v-80h160v-400H200v160h-80v-320q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H600ZM320 0l-56-56 103-104H40v-80h327L264-344l56-56 200 200L320 0ZM200-640h560v-80H200v80Zm0 0v-80 80Z"/></svg>
-    <span>Events</span>
-  </a>
-
-  <a
-    href="/about/"
-    :class="currentPath.startsWith('/about') ? 'bg-amber-50 text-amber-700' : 'text-gray-700 hover:bg-amber-50'"
-    class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960" fill="currentColor"><path d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-    <span>About</span>
-  </a>
-</nav>
-      </div>
+        <!-- About -->
+        <a
+          href="/about/"
+          @click="closeMobileNav"
+          :class="currentPath.startsWith('/about') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'"
+          class="flex items-center gap-3 px-4 py-3 font-bold"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            viewBox="0 -960 960 960"
+            fill="currentColor"
+          >
+            <path
+              d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+            ></path>
+          </svg>
+          <span>About</span>
+        </a>
+      </nav>
     </div>
-  </template>
+  </div>
 </header>
 
-<div class="h-[76px] md:h-[90px]"></div>
-
-<style>
-  [x-cloak] { display: none !important; }
-</style>
+<!-- Spacer for fixed header -->
+<div class="h-20 md:h-24"></div>

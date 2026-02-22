@@ -1,132 +1,259 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { events } from "../../data/events";
+import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { events } from "@/data/events";
+
+function isPastEvent(dateString: string): boolean {
+  const eventDate = new Date(dateString);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return eventDate < today;
+}
 ---
 
 <Layout
-  title="Events - Jayapura JavaScript Community"
+  title="Discover Our Upcoming Events"
   description="Discover the latest workshops, meetups, and conferences related to JavaScript in Jayapura."
 >
-  <main class="relative mx-auto w-full max-w-6xl min-h-screen px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
-    <div class="absolute top-0 left-1/2 -z-10 w-[600px] h-[600px] -translate-x-1/2 rounded-full bg-amber-200/30 blur-[100px] opacity-70 animate-pulse-slow"></div>
-
+  <main class="relative mx-auto w-full max-w-5xl min-h-screen px-4 sm:px-6 lg:px-8 bg-white">
     <div class="py-16 text-center">
-      <div class="animate-fade-in-up">
-        <span class="inline-block py-1 px-3 rounded-full bg-amber-100 text-amber-700 text-xs font-bold tracking-wide uppercase mb-4 border border-amber-200">
-          Community Updates
-        </span>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight">
-          Upcoming <span class="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">Events</span>
-        </h1>
-        <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600 leading-relaxed">
-          Stay tuned for our latest meetups, workshops, and sharing sessions. 
-          Join us to learn, collaborate, and grow together.
-        </p>
-      </div>
+      <span class="inline-block py-1 px-3 rounded-full bg-amber-50 text-amber-700 text-xs font-medium tracking-wide uppercase mb-4 border border-amber-200">
+        Community Updates
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 tracking-tight">
+        Upcoming <span
+              class="bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-transparent"
+              >Events</span
+            >
+      </h1>
+      <p class="mt-4 max-w-xl mx-auto text-neutral-500 leading-relaxed">
+        Join us for meetups, workshops, and sharing sessions.
+      </p>
     </div>
 
-    <div class="pb-24 space-y-8">
-      {events.map((event, index) => (
-        <div
-          class="group relative flex flex-col md:flex-row bg-white border border-gray-100 rounded-3xl shadow-sm hover:shadow-md transition-all duration-500 overflow-hidden animate-fade-in-up"
-          style={`animation-delay: ${index * 150}ms`}
-        >
-          <div class="md:w-2/5 h-64 md:h-auto overflow-hidden relative">
-            <img
-              src={event.image}
-              alt={event.title}
-              class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out cursor-zoom-in"
-              loading="lazy"
-              onclick={`openLightbox('${event.image}', '${event.title}')`}
-            />
-            <div class="absolute top-4 left-4">
-              <span class="px-3 py-1 text-[10px] font-bold text-amber-900 bg-white/90 backdrop-blur-sm rounded-full shadow-sm uppercase">
-                {event.category}
-              </span>
-            </div>
-          </div>
+    <div class="pb-24 space-y-6">
+      {events.map((event) => {
+        const isPast = isPastEvent(event.date);
+        
+        return (
+          <article>
+            <a
+              href={`/events/${event.slug}`}
+              class={`block border rounded-2xl overflow-hidden transition-colors ${
+                isPast 
+                  ? "border-neutral-200 hover:border-neutral-300 bg-neutral-50/50" 
+                  : "border-neutral-200 hover:border-amber-300"
+              }`}
+            >
+              <div class="flex flex-col md:flex-row">
+                <!-- Image -->
+                <div class="md:w-72 lg:w-80 h-48 md:h-auto flex-shrink-0 overflow-hidden bg-neutral-100 relative">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    class={`w-full h-full object-cover ${isPast ? "grayscale" : ""}`}
+                    loading="lazy"
+                  />
+                  {isPast && (
+                    <div class="absolute inset-0 bg-neutral-900/20 flex items-center justify-center">
+                      <span class="px-3 py-1.5 bg-neutral-900 text-white text-xs font-bold rounded-full uppercase">
+                        Event Ended
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-          <div class="md:w-3/5 p-8 flex flex-col justify-center">
-              <div class="flex items-center gap-2 mb-3 text-amber-600 text-sm font-bold uppercase tracking-widest">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor font-bold"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-              {event.date}
-            </div>
+                <!-- Content -->
+                <div class="flex-1 p-6 md:p-8 flex flex-col">
+                  <!-- Top: Category & Status -->
+                  <div class="flex items-center justify-between gap-3 mb-4">
+                    <span class="text-xs font-medium text-neutral-500 uppercase tracking-wide">
+                     #{event.category}
+                    </span>
+                    {isPast ? (
+                      <span class="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-600">
+                        <span class="w-1.5 h-1.5 bg-neutral-400 rounded-full"></span>
+                        Completed
+                      </span>
+                    ) : event.registrationStatus ? (
+                      <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                        Open Registration
+                      </span>
+                    ) : (
+                      <span class="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-600">
+                        <span class="w-1.5 h-1.5 bg-neutral-400 rounded-full"></span>
+                        Registration Closed
+                      </span>
+                    )}
+                  </div>
 
-            <h3 class="text-2xl md:text-3xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors mb-4 leading-tight">
-              {event.title}
-            </h3>
-            
-            <p class="text-gray-600 leading-relaxed mb-6 line-clamp-2 md:line-clamp-none text-sm md:text-base">
-              {event.desc}
-            </p>
-            <div class="mt-auto flex items-center justify-between border-t border-gray-50 pt-6">
-               <div class="flex items-center text-gray-500 text-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                <span>{event.location}</span>
+                  <!-- Title -->
+                  <h2 class="text-xl md:text-2xl font-bold leading-snug text-neutral-900">
+                    {event.title}
+                  </h2>
+
+                  <!-- Description -->
+                  <p class="mt-3 text-neutral-600 text-sm leading-relaxed line-clamp-2">
+                    {event.desc}
+                  </p>
+
+                  <!-- Meta Info -->
+                  <div class="mt-auto pt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-neutral-500">
+                    <!-- Date -->
+                    <div class="flex items-center gap-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4 text-neutral-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span>{event.date}</span>
+                    </div>
+
+                    <!-- Time -->
+                    {event.time && (
+                      <div class="flex items-center gap-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-4 h-4 text-neutral-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <span>{event.time}</span>
+                      </div>
+                    )}
+
+                    <!-- Location -->
+                    <div class="flex items-center gap-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4 text-neutral-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                      <span>{event.location}</span>
+                    </div>
+                  </div>
+
+                  <!-- CTA -->
+                  <div class="mt-6 flex items-center justify-between border-t border-neutral-100 pt-6">
+                    {isPast ? (
+                      <span class="text-sm text-amber-600 font-medium flex items-center gap-2">
+                        View recap
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-4 h-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                          />
+                        </svg>
+                      </span>
+                    ) : (
+                      <span class="text-sm text-neutral-500 flex items-center gap-2">
+                        View details
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-4 h-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                          />
+                        </svg>
+                      </span>
+                    )}
+
+                    {event.attendees && (
+                      <div class="flex items-center gap-2 text-sm text-neutral-400">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-4 h-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                          />
+                        </svg>
+                        <span>{event.attendees} {isPast ? "attended" : "attending"}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-              
-              <a href={`/events/${event.slug}`} class="inline-flex items-center md:text-sm gap-2 px-6 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-xl hover:bg-amber-500 transition-all hover:shadow-lg active:scale-95">
-                View Event
-              </a>
-            </div>
-          </div>
-        </div>
-      ))}
+            </a>
+          </article>
+        );
+      })}
     </div>
+
+    {events.length === 0 && (
+      <div class="py-24 text-center">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-neutral-100 flex items-center justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-8 h-8 text-neutral-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-neutral-900 mb-2">No events yet</h3>
+        <p class="text-neutral-500">Check back soon for upcoming events.</p>
+      </div>
+    )}
   </main>
-
-  <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out animate-fade-in" onclick="closeLightbox()">
-    <button class="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-    </button>
-    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[85vh] rounded-xl shadow-2xl transition-transform duration-300 scale-95" />
-  </div>
-</Layout>
-
-<script is:inline>   function openLightbox(src, title) {
-    const lightbox = document.getElementById('lightbox');
-    const img = document.getElementById('lightbox-img');
-    img.src = src;
-    img.alt = title;
-    lightbox.classList.remove('hidden');
-    lightbox.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => { img.classList.remove('scale-95'); img.classList.add('scale-100'); }, 10);
-  }
-
-  function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    const img = document.getElementById('lightbox-img');
-    img.classList.add('scale-95');
-    setTimeout(() => {
-      lightbox.classList.add('hidden');
-      lightbox.classList.remove('flex');
-      document.body.style.overflow = 'auto';
-    }, 200);
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLightbox();
-  }); 
-</script>
-<style>  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fade-in { animation: fadeIn 0.3s ease-out; }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes pulseSlow {
-    0%, 100% { opacity: 0.5; transform: translate(-50%, 0) scale(1); }
-    50% { opacity: 0.7; transform: translate(-50%, -10px) scale(1.05); }
-  }
-  .animate-fade-in-up {
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-  }
-  .animate-pulse-slow {
-    animation: pulseSlow 6s ease-in-out infinite;
-  } </style>
+</Layout>`
