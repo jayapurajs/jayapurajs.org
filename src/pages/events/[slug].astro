@@ -205,7 +205,7 @@ function formatDate(dateString: string): string {
               </div>
             ) : event.registrationStatus ? (
               <a
-                href={`/events/${event.slug}/register/`}
+                href={event.registrationUrl || "/coming-soon/"}
                 target="_blank"
                 class="flex items-center justify-center text-center text-sm font-bold bg-yellow-500 text-white gap-3 px-8 py-4 rounded-full hover:bg-neutral-900 transition-colors"
               >
