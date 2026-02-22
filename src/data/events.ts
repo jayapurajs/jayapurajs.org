@@ -66,7 +66,7 @@ export const events: Event[] = [
     speakers: [
       {
         name: "Theis Andatu",
-        topic: "Computational Thinking for Developer",
+        topic: "Computational Thinking for Developers",
         image: getImage("speakers/theis-andatu.jpeg"),
         desc: "Learn the core principles of computational thinking and how to apply them in your daily development workflow.",
       },
@@ -82,7 +82,7 @@ export const events: Event[] = [
       { time: "15:20", title: "Opening", sub: "Welcome to JayapuraJS" },
       {
         time: "15:30",
-        title: "Computational Thinking for Developer",
+        title: "Computational Thinking for Developers",
         sub: "Theis Andatu • Talk + Q&A",
       },
       {
