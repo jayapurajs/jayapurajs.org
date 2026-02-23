@@ -56,7 +56,7 @@ export const events: Event[] = [
     desc: "Join us for the very first JayapuraJS meetup! We'll kick off with two talks covering computational thinking fundamentals and getting started with JavaScript programming.",
     category: "Meetup",
     date: "2026-03-14",
-    time: "15:00 - 17:00 WIT",
+    time: "15:00 - 18:00 WIT",
     location: "tbd",
     // locationUrl: "https://maps.google.com/?q=Cafe+Socio+Culture+Jayapura",
     image: getImage("1-initial-meetup.jpeg"),
