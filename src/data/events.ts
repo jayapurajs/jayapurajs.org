@@ -61,7 +61,8 @@ export const events: Event[] = [
     locationUrl: "https://maps.google.com/?q=Cafe+Socio+Culture+Jayapura",
     image: getImage("1-initial-meetup.jpeg"),
     attendees: 20,
-    registrationStatus: true,
+    registrationStatus: false,
+    registrationUrl: "https://forms.gle/FrCgJvmP8HC6gpkY6",
     speakers: [
       {
         name: "Theis Andatu",
