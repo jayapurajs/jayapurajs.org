@@ -57,10 +57,10 @@ export const events: Event[] = [
     category: "Meetup",
     date: "2026-03-14",
     time: "15:00 - 17:00 WIT",
-    location: "Cafe Socio Culture",
-    locationUrl: "https://maps.google.com/?q=Cafe+Socio+Culture+Jayapura",
+    location: "tbd",
+    // locationUrl: "https://maps.google.com/?q=Cafe+Socio+Culture+Jayapura",
     image: getImage("1-initial-meetup.jpeg"),
-    attendees: 20,
+    attendees: 30,
     registrationStatus: false,
     registrationUrl: "https://forms.gle/FrCgJvmP8HC6gpkY6",
     speakers: [
