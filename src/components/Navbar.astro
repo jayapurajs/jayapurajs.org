@@ -62,6 +62,13 @@
         >
           About
         </a>
+        <a
+          href="/coc/"
+          :class="currentPath.startsWith('/coc') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
+          class="px-1 py-2 text-sm font-medium"
+        >
+          Code of Conduct
+        </a>
       </div>
 
       <!-- Mobile menu button -->
@@ -143,6 +150,16 @@
           class="flex items-center gap-3 px-4 py-3"
         >
           <span>About</span>
+        </a>
+
+        <!-- Code of Conduct -->
+        <a
+          href="/coc/"
+          @click="closeMobileNav"
+          :class="currentPath.startsWith('/coc') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'"
+          class="flex items-center gap-3 px-4 py-3"
+        >
+          <span>Code of Conduct</span>
         </a>
       </nav>
     </div>
