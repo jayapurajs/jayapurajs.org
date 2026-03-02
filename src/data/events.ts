@@ -79,18 +79,19 @@ export const events: Event[] = [
     ],
     agenda: [
       { time: "15:00", title: "Registration", sub: "Check-in & networking" },
-      { time: "15:20", title: "Opening", sub: "Welcome to JayapuraJS" },
+      { time: "15:30", title: "Opening", sub: "Welcome to JayapuraJS" },
       {
-        time: "15:30",
+        time: "15:45",
         title: "Computational Thinking for Developers",
         sub: "Theis Andatu • Talk + Q&A",
       },
+      { time: "16:25", title: "Coffe Break", sub: "Networking" },
       {
-        time: "16:15",
+        time: "16:40",
         title: "Getting Started the Journey of Programming with JavaScript",
         sub: "Fidel Silak • Talk + Q&A",
       },
-      { time: "17:20", title: "Closing", sub: "Group photo & announcements" },
+      { time: "17:40", title: "Closing", sub: "Group photo & announcements" },
     ],
   },
 ];
