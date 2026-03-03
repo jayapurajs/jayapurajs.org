@@ -57,7 +57,7 @@ export const events: Event[] = [
     category: "Meetup",
     date: "2026-03-14",
     time: "15:00 - 18:00 WIT",
-    location: "tbd",
+    location: "Isasai Restaurant & Venue",
     locationUrl: "https://maps.app.goo.gl/dZNtY962nwz8irvd7",
     image: getImage("1-initial-meetup.jpg"),
     attendees: 25,
