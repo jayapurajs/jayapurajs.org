@@ -58,11 +58,11 @@ export const events: Event[] = [
     date: "2026-03-14",
     time: "15:00 - 18:00 WIT",
     location: "tbd",
-    // locationUrl: "https://maps.google.com/?q=Cafe+Socio+Culture+Jayapura",
-    image: getImage("1-initial-meetup.jpeg"),
-    attendees: 30,
-    registrationStatus: false,
-    registrationUrl: "https://forms.gle/FrCgJvmP8HC6gpkY6",
+    locationUrl: "https://maps.app.goo.gl/dZNtY962nwz8irvd7",
+    image: getImage("1-initial-meetup.jpg"),
+    attendees: 25,
+    registrationStatus: true,
+    registrationUrl: "https://forms.gle/hkyRZmevr7ycqRjq6",
     speakers: [
       {
         name: "Theis Andatu",
