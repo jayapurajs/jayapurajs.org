@@ -5,14 +5,25 @@ export interface Props {
   image?: string;
 }
 
-const { title, description, image = "/logo.png" } = Astro.props;
+const SITE_NAME = "Jayapura JavaScript User Group";
+const DEFAULT_DESCRIPTION = "Komunitas Pengguna JavaScript di Jayapura, Papua.";
+
+const {
+  title,
+  description = DEFAULT_DESCRIPTION,
+  image = "/images/logo/jayapurajs-dark.png",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const ogImage = new URL(image, Astro.site ?? Astro.url);
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/jayapurajs-v2.png" />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Favicon -->
 <link
   rel="icon"
   type="image/png"
@@ -30,20 +41,24 @@ const { title, description, image = "/logo.png" } = Astro.props;
 <link rel="manifest" href="/favicon/site.webmanifest" />
 
 <!-- Primary Meta Tags -->
-<title>{title} - Jayapura JavaScript User Group</title>
-<meta name="title" content={title} />
+<title>{title} - {SITE_NAME}</title>
 <meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:locale" content="id_ID" />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={title} />
