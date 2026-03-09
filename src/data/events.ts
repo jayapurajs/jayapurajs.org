@@ -61,7 +61,7 @@ export const events: Event[] = [
     locationUrl: "https://maps.app.goo.gl/dZNtY962nwz8irvd7",
     image: getImage("1-initial-meetup.jpg"),
     attendees: 25,
-    registrationStatus: true,
+    registrationStatus: false,
     registrationUrl: "https://forms.gle/hkyRZmevr7ycqRjq6",
     speakers: [
       {
