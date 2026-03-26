@@ -29,6 +29,13 @@ export interface AgendaItem {
   sub: string;
 }
 
+export interface EventResource {
+  title: string;
+  type: 'slides' | 'github' | 'video' | 'article';
+  url: string;
+  speaker?: string;
+}
+
 export interface Event {
   slug: string;
   title: string;
@@ -45,6 +52,7 @@ export interface Event {
   recapUrl?: string;
   documentationUrl?: string;
   galleryImages?: ImageMetadata[];
+  resources?: EventResource[];
   speakers?: Speaker[];
   agenda?: AgendaItem[];
 }
@@ -94,12 +102,33 @@ export const events: Event[] = [
       { time: "17:40", title: "Closing", sub: "Group photo & announcements" },
     ],
     galleryImages: [
-      getImage("1-initial-meetup.jpg"),
-      getImage("speakers/theis-andatu.jpeg"),
-      getImage("speakers/fidel-silak.jpeg"),
-      getImage("1-initial-meetup.jpg"),
-      getImage("speakers/theis-andatu.jpeg"),
-      getImage("speakers/fidel-silak.jpeg"),
+      getImage("galleries/IMG_001.jpeg"),
+      getImage("galleries/IMG_002.jpeg"),
+      getImage("galleries/IMG_003.jpeg"),
+      getImage("galleries/IMG_004.jpeg"),
+      getImage("galleries/IMG_005.jpeg"),
+      getImage("galleries/IMG_006.jpeg"),
+      getImage("galleries/IMG_007.jpeg")
+    ],
+    resources: [
+      {
+        title: "Computational Thinking for Developers",
+        type: "slides",
+        url: "https://docs.google.com/presentation/d/example",
+        speaker: "Theis Andatu",
+      },
+      {
+        title: "Getting Started with JavaScript",
+        type: "slides",
+        url: "https://docs.google.com/presentation/d/example",
+        speaker: "Fidel Silak",
+      },
+      {
+        title: "Fundamental JavaScript",
+        type: "github",
+        url: "https://github.com/fffsilakk/fundamental-javascript",
+        speaker: "Fidel Silak",
+      },
     ],
   },
 ];

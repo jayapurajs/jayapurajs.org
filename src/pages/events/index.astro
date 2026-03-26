@@ -9,6 +9,15 @@ function isPastEvent(dateString: string): boolean {
   today.setHours(0, 0, 0, 0);
   return eventDate < today;
 }
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
 ---
 
 <Layout
@@ -21,10 +30,7 @@ function isPastEvent(dateString: string): boolean {
         Community Updates
       </span>
       <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 tracking-tight">
-        Upcoming <span
-              class="bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-transparent"
-              >Events</span
-            >
+        Upcoming <span class="bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-transparent">Events</span>
       </h1>
       <p class="mt-4 max-w-xl mx-auto text-neutral-500 leading-relaxed">
         Join us for meetups, workshops, and sharing sessions.
@@ -34,30 +40,46 @@ function isPastEvent(dateString: string): boolean {
     <div class="pb-24 space-y-6">
       {events.map((event) => {
         const isPast = isPastEvent(event.date);
-        
+
         return (
           <article>
             <a
               href={`/events/${event.slug}`}
-              class={`block border rounded-2xl overflow-hidden transition-colors ${
-                isPast 
-                  ? "border-neutral-200 hover:border-neutral-300 bg-neutral-50/50" 
-                  : "border-neutral-200 hover:border-amber-300"
+              class={`group block rounded-2xl overflow-hidden border transition-all duration-200 ${
+                isPast
+                  ? "border-neutral-200 hover:border-neutral-300 bg-white hover:shadow-sm"
+                  : "border-neutral-200 hover:border-yellow-400 hover:shadow-md"
               }`}
             >
               <div class="flex flex-col md:flex-row">
+
                 <!-- Image -->
-                <div class="md:w-72 lg:w-80 h-auto flex-shrink-0 overflow-hidden bg-neutral-100 relative border-b md:border-b-0 md:border-r">
+                <div class="md:w-64 lg:w-72 shrink-0 relative overflow-hidden border-b md:border-b-0 md:border-r border-neutral-100">
                   <Image
                     src={event.image}
                     alt={event.title}
-                    class={`w-full h-full object-cover ${isPast ? "grayscale" : ""}`}
+                    class={`w-full h-52 md:h-full object-cover transition-transform duration-300 group-hover:scale-105 ${isPast ? "grayscale" : ""}`}
                     loading="lazy"
                   />
+                  {/* Overlay for past events */}
                   {isPast && (
-                    <div class="absolute inset-0 bg-neutral-900/20 flex items-center justify-center">
-                      <span class="px-3 py-1.5 bg-neutral-900 text-white text-xs font-bold rounded-full uppercase">
+                    <div class="absolute inset-0 bg-neutral-900/30" />
+                  )}
+                  {/* Event Ended badge — top-left corner of image */}
+                  {isPast && (
+                    <div class="absolute top-3 left-3">
+                      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-neutral-900/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider rounded-md">
+                        <span class="w-1.5 h-1.5 bg-neutral-400 rounded-full"></span>
                         Event Ended
+                      </span>
+                    </div>
+                  )}
+                  {/* Open Registration badge — top-left corner of image */}
+                  {!isPast && event.registrationStatus && (
+                    <div class="absolute top-3 left-3">
+                      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider rounded-md">
+                        <span class="w-1.5 h-1.5 bg-emerald-300 rounded-full animate-pulse"></span>
+                        Open
                       </span>
                     </div>
                   )}
@@ -65,166 +87,99 @@ function isPastEvent(dateString: string): boolean {
 
                 <!-- Content -->
                 <div class="flex-1 p-6 md:p-8 flex flex-col">
-                  <!-- Top: Category & Status -->
-                  <div class="flex items-center justify-between gap-3 mb-4">
-                    <span class="text-xs font-medium text-neutral-500 uppercase tracking-wide">
-                     #{event.category}
+
+                  <!-- Top: Category + Status -->
+                  <div class="flex items-center gap-2 mb-4 flex-wrap">
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-yellow-400 text-neutral-900 rounded">
+                      #{event.category}
                     </span>
                     {isPast ? (
-                      <span class="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-600">
-                        <span class="w-1.5 h-1.5 bg-neutral-400 rounded-full"></span>
+                      <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-neutral-100 text-neutral-500 rounded border border-neutral-200">
                         Completed
                       </span>
                     ) : event.registrationStatus ? (
-                      <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
-                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                        Open Registration
+                      <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded border border-emerald-200">
+                        Registration Open
                       </span>
                     ) : (
-                      <span class="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-600">
-                        <span class="w-1.5 h-1.5 bg-neutral-400 rounded-full"></span>
+                      <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-neutral-100 text-neutral-500 rounded border border-neutral-200">
                         Registration Closed
                       </span>
                     )}
                   </div>
 
                   <!-- Title -->
-                  <h2 class="text-xl md:text-2xl font-bold leading-snug text-neutral-900">
+                  <h2 class={`text-xl md:text-2xl font-bold leading-snug ${isPast ? "text-neutral-500" : "text-neutral-900"}`}>
                     {event.title}
                   </h2>
 
                   <!-- Description -->
-                  <p class="mt-3 text-neutral-600 text-sm leading-relaxed line-clamp-2">
+                  <p class="mt-2 text-neutral-500 text-sm leading-relaxed line-clamp-2">
                     {event.desc}
                   </p>
 
                   <!-- Meta Info -->
-                  <div class="mt-auto pt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-neutral-500">
-                    <!-- Date -->
-                    <div class="flex items-center gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-4 h-4 text-neutral-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
+                  <div class="mt-auto pt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-neutral-400">
+                    <div class="flex items-center gap-1.5">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
-                      <span>{event.date}</span>
+                      <span class="font-medium text-neutral-500">{formatDate(event.date)}</span>
                     </div>
 
-                    <!-- Time -->
                     {event.time && (
-                      <div class="flex items-center gap-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="w-4 h-4 text-neutral-400"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
+                      <div class="flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span>{event.time}</span>
                       </div>
                     )}
 
-                    <!-- Location -->
-                    <div class="flex items-center gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-4 h-4 text-neutral-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
+                    <div class="flex items-center gap-1.5">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                       <span>{event.location}</span>
                     </div>
                   </div>
 
-                  <!-- CTA -->
-                  <div class="mt-6 flex items-center justify-between border-t border-neutral-100 pt-6">
+                  <!-- Footer: CTA + Attendees -->
+                  <div class="mt-5 pt-5 border-t border-neutral-100 flex items-center justify-between gap-4">
                     {isPast ? (
-                      <span class="text-sm text-amber-600 font-medium flex items-center gap-2">
+                      <span class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 group-hover:text-amber-700 transition-colors">
                         View recap
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
+                    ) : event.registrationStatus ? (
+                      <span class="inline-flex items-center gap-2 text-sm font-semibold text-yellow-600 group-hover:text-yellow-700 transition-colors">
+                        Register now
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </span>
                     ) : (
-                      <span class="text-sm text-neutral-500 flex items-center gap-2">
+                      <span class="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 group-hover:text-neutral-500 transition-colors">
                         View details
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </span>
                     )}
 
                     {event.attendees && (
-                      <div class="flex items-center gap-2 text-sm text-neutral-400">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                          />
+                      <div class="flex items-center gap-1.5 text-xs text-neutral-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         <span>{event.attendees} {isPast ? "attended" : "attending"}</span>
                       </div>
                     )}
                   </div>
+
                 </div>
               </div>
             </a>
@@ -236,19 +191,8 @@ function isPastEvent(dateString: string): boolean {
     {events.length === 0 && (
       <div class="py-24 text-center">
         <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-neutral-100 flex items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8 text-neutral-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
         </div>
         <h3 class="text-lg font-semibold text-neutral-900 mb-2">No events yet</h3>
@@ -256,4 +200,4 @@ function isPastEvent(dateString: string): boolean {
       </div>
     )}
   </main>
-</Layout>`
+</Layout>
