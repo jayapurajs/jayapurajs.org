@@ -114,7 +114,7 @@ export const events: Event[] = [
       {
         title: "Computational Thinking for Developers",
         type: "slides",
-        url: "https://docs.google.com/presentation/d/1LzpaCdaKW9WO161twIznGZYwpVZgaBxL/edit?usp=sharing&ouid=116840793618352286545&rtpof=true&sd=true",
+        url: "https://drive.google.com/file/d/1W9f4RIZ_O0UFww9tBdZZSQgsxK0IYSxx/view?usp=sharing",
         speaker: "Theis Andatu",
       },
       {
