@@ -114,11 +114,11 @@ export const events: Event[] = [
       {
         title: "Computational Thinking for Developers",
         type: "slides",
-        url: "https://docs.google.com/presentation/d/example",
+        url: "https://docs.google.com/presentation/d/1LzpaCdaKW9WO161twIznGZYwpVZgaBxL/edit?usp=sharing&ouid=116840793618352286545&rtpof=true&sd=true",
         speaker: "Theis Andatu",
       },
       {
-        title: "Getting Started with JavaScript",
+        title: "Getting Started the Journey of Programming with JavaScript",
         type: "slides",
         url: "https://docs.google.com/presentation/d/example",
         speaker: "Fidel Silak",
