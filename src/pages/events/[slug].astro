@@ -540,18 +540,15 @@ const galleryAlpineData = `{
             >
               {galleryImages.map((img, i) => (
                 <button
-                  class="min-w-full cursor-zoom-in flex items-center justify-center bg-white h-[480px]"
+                  class="min-w-full cursor-zoom-in flex items-center justify-center bg-white"
+                  style="min-height: 480px"
                   @click={`openModal(${i})`}
                   aria-label={`View photo ${i + 1}`}
                 >
                   <Image
                     src={img}
                     alt={`Event photo ${i + 1}`}
-                    width={800}
-                    height={480}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                    class="h-full w-auto max-w-full object-contain pointer-events-none"
+                    class="max-h-[480px] w-auto max-w-full object-contain pointer-events-none"
                   />
                 </button>
               ))}
@@ -608,17 +605,13 @@ const galleryAlpineData = `{
               <button
                 @click={`currentIndex = ${i}; startAutoPlay()`}
                 :class={`currentIndex === ${i} ? 'ring-2 ring-yellow-400 ring-offset-1' : 'opacity-50 hover:opacity-100'`}
-                class="rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center h-14 transition-all duration-200"
+                class="rounded-lg overflow-hidden bg-white flex items-center justify-center h-14 transition-all duration-200"
                 aria-label={`Go to photo ${i + 1}`}
               >
                 <Image
                   src={img}
                   alt={`Thumbnail ${i + 1}`}
-                  width={150}
-                  height={150}
-                  loading="lazy"
-                  decoding="async"
-                  class="h-full w-full object-cover pointer-events-none"
+                  class="max-h-14 w-auto max-w-full object-contain pointer-events-none"
                 />
               </button>
             ))}
