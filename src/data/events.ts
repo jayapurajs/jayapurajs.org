@@ -93,5 +93,13 @@ export const events: Event[] = [
       },
       { time: "17:40", title: "Closing", sub: "Group photo & announcements" },
     ],
+    galleryImages: [
+      getImage("1-initial-meetup.jpg"),
+      getImage("speakers/theis-andatu.jpeg"),
+      getImage("speakers/fidel-silak.jpeg"),
+      getImage("1-initial-meetup.jpg"),
+      getImage("speakers/theis-andatu.jpeg"),
+      getImage("speakers/fidel-silak.jpeg"),
+    ],
   },
 ];
