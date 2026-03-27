@@ -9,7 +9,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   site: "https://jayapurajs-org.pages.dev",
   i18n: {
-    defaultLocale: 'id',
+    defaultLocale: 'en',
     locales: ['id', 'en'],
     routing: {
       prefixDefaultLocale: false,
