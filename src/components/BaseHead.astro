@@ -16,6 +16,7 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 const ogImage = new URL(image, Astro.site ?? Astro.url);
+const ogLocale = Astro.currentLocale === 'en' ? 'en_US' : 'id_ID';
 ---
 
 <!-- Global Metadata -->
@@ -53,7 +54,7 @@ const ogImage = new URL(image, Astro.site ?? Astro.url);
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:image:alt" content={title} />
-<meta property="og:locale" content="id_ID" />
+<meta property="og:locale" content={ogLocale} />
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />

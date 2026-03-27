@@ -1,21 +1,36 @@
+---
+import { useTranslations } from '@/i18n/translations';
+
+const lang = (Astro.currentLocale ?? 'id') as 'id' | 'en';
+const t = useTranslations(lang);
+const base = lang === 'en' ? '/en' : '';
+const rawPath = Astro.url.pathname;
+const altLangHref = lang === 'id'
+  ? `/en${rawPath}`
+  : rawPath.replace(/^\/en/, '') || '/';
+---
+
 <header
   id="page-header"
-  x-data="{ 
-    mobileNavOpen: false, 
-    currentPath: window.location.pathname,
+  x-data="{
+    mobileNavOpen: false,
     isScrolled: false,
-    closeMobileNav() {
-      this.mobileNavOpen = false;
-    }
+    currentPath: window.location.pathname,
+    isActive(segment) {
+      const p = this.currentPath;
+      const norm = (p === '/en' || p === '/en/') ? '/' : p.startsWith('/en/') ? p.slice(3) : p;
+      return segment === '/' ? (norm === '/' || norm === '') : norm.startsWith(segment);
+    },
+    closeMobileNav() { this.mobileNavOpen = false; }
   }"
   x-init="
     window.addEventListener('scroll', () => { isScrolled = window.scrollY > 10 });
-    document.addEventListener('astro:after-navigation', () => { 
-      currentPath = window.location.pathname; 
+    document.addEventListener('astro:after-navigation', () => {
+      currentPath = window.location.pathname;
       mobileNavOpen = false;
     });
-    $watch('mobileNavOpen', value => { 
-      document.body.style.overflow = value ? 'hidden' : 'auto' 
+    $watch('mobileNavOpen', value => {
+      document.body.style.overflow = value ? 'hidden' : 'auto'
     });
   "
   @keydown.escape.window="closeMobileNav"
@@ -27,7 +42,7 @@
     <nav class="flex items-center justify-between gap-3">
       <!-- Logo -->
       <a
-        href="/"
+        href={`${base}/`}
         class="flex items-center group transition-all active:scale-95 outline-none"
       >
         <div class="relative h-10 md:h-12 flex items-center">
@@ -39,36 +54,40 @@
         </div>
       </a>
 
-      <!-- Desktop navigation (text only) -->
-      <div class="hidden md:flex items-center gap-6">
+      <!-- Desktop navigation -->
+      <div class="hidden md:flex items-center gap-5">
         <a
-          href="/"
-          :class="currentPath === '/' ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
+          href={`${base}/`}
+          :class="isActive('/') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
           class="px-1 py-2 text-sm font-medium"
-        >
-          Home
-        </a>
+        >{t('nav_home')}</a>
         <a
-          href="/events/"
-          :class="currentPath.startsWith('/events') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
+          href={`${base}/events`}
+          :class="isActive('/events') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
           class="px-1 py-2 text-sm font-medium"
-        >
-          Events
-        </a>
+        >{t('nav_events')}</a>
         <a
-          href="/about/"
-          :class="currentPath.startsWith('/about') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
+          href={`${base}/about`}
+          :class="isActive('/about') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
           class="px-1 py-2 text-sm font-medium"
-        >
-          About
-        </a>
+        >{t('nav_about')}</a>
         <a
-          href="/coc/"
-          :class="currentPath.startsWith('/coc') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
+          href={`${base}/coc`}
+          :class="isActive('/coc') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
           class="px-1 py-2 text-sm font-medium"
-        >
-          Code of Conduct
-        </a>
+        >{t('nav_coc')}</a>
+
+        <!-- Language switcher -->
+        <div class="flex items-center border border-neutral-200 rounded-lg overflow-hidden text-xs font-bold">
+          <a
+            href={lang === 'en' ? altLangHref : rawPath}
+            class={`px-2.5 py-1.5 transition-colors ${lang === 'id' ? 'bg-yellow-400 text-neutral-900' : 'text-neutral-500 hover:text-neutral-900'}`}
+          >ID</a>
+          <a
+            href={lang === 'id' ? altLangHref : rawPath}
+            class={`px-2.5 py-1.5 transition-colors ${lang === 'en' ? 'bg-yellow-400 text-neutral-900' : 'text-neutral-500 hover:text-neutral-900'}`}
+          >EN</a>
+        </div>
       </div>
 
       <!-- Mobile menu button -->
@@ -79,37 +98,16 @@
         aria-label="Toggle menu"
         :aria-expanded="mobileNavOpen"
       >
-        <svg
-          x-show="!mobileNavOpen"
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"></path>
+        <svg x-show="!mobileNavOpen" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
-        <svg
-          x-show="mobileNavOpen"
-          x-cloak
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"></path>
+        <svg x-show="mobileNavOpen" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </nav>
 
-    <!-- Mobile dropdown menu (with icons) -->
+    <!-- Mobile dropdown -->
     <div
       x-show="mobileNavOpen"
       x-cloak
@@ -122,45 +120,26 @@
       class="md:hidden absolute left-0 right-0 top-full mt-2 mx-4 bg-white rounded-xl border border-neutral-200 overflow-hidden"
     >
       <nav class="flex flex-col p-2 text-sm">
-        <!-- Home -->
-        <a
-          href="/"
-          @click="closeMobileNav"
-          :class="currentPath === '/' ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'"
-          class="flex items-center gap-3 px-4 py-3"
-        >
-          <span>Home</span>
+        <a href={`${base}/`} @click="closeMobileNav" :class="isActive('/') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
+          <span>{t('nav_home')}</span>
         </a>
-
-        <!-- Events -->
-        <a
-          href="/events/"
-          @click="closeMobileNav"
-          :class="currentPath.startsWith('/events') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'"
-          class="flex items-center gap-3 px-4 py-3"
-        >
-          <span>Events</span>
+        <a href={`${base}/events`} @click="closeMobileNav" :class="isActive('/events') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
+          <span>{t('nav_events')}</span>
         </a>
-
-        <!-- About -->
-        <a
-          href="/about/"
-          @click="closeMobileNav"
-          :class="currentPath.startsWith('/about') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'"
-          class="flex items-center gap-3 px-4 py-3"
-        >
-          <span>About</span>
+        <a href={`${base}/about`} @click="closeMobileNav" :class="isActive('/about') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
+          <span>{t('nav_about')}</span>
         </a>
-
-        <!-- Code of Conduct -->
-        <a
-          href="/coc/"
-          @click="closeMobileNav"
-          :class="currentPath.startsWith('/coc') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'"
-          class="flex items-center gap-3 px-4 py-3"
-        >
-          <span>Code of Conduct</span>
+        <a href={`${base}/coc`} @click="closeMobileNav" :class="isActive('/coc') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
+          <span>{t('nav_coc')}</span>
         </a>
+        <!-- Language switcher in mobile -->
+        <div class="flex items-center gap-2 px-4 py-3 border-t border-neutral-100 mt-1">
+          <span class="text-xs text-neutral-400 font-medium">{t('nav_lang_label')}</span>
+          <div class="flex items-center border border-neutral-200 rounded-lg overflow-hidden text-xs font-bold">
+            <a href={lang === 'en' ? altLangHref : rawPath} class={`px-2.5 py-1 transition-colors ${lang === 'id' ? 'bg-yellow-400 text-neutral-900' : 'text-neutral-500'}`}>ID</a>
+            <a href={lang === 'id' ? altLangHref : rawPath} class={`px-2.5 py-1 transition-colors ${lang === 'en' ? 'bg-yellow-400 text-neutral-900' : 'text-neutral-500'}`}>EN</a>
+          </div>
+        </div>
       </nav>
     </div>
   </div>
