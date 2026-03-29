@@ -120,7 +120,7 @@ export const events: Event[] = [
       {
         title: "Getting Started the Journey of Programming with JavaScript",
         type: "slides",
-        url: "https://docs.google.com/presentation/d/example",
+        url: "https://drive.google.com/file/d/1Xhl9rKWrAQO7jcQ0Kh2JoVzRJwlBHwsK/view?usp=drive_link",
         speaker: "Fidel Silak",
       },
       {
