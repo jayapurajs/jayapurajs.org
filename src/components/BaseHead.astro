@@ -6,7 +6,7 @@ export interface Props {
 }
 
 const SITE_NAME = "Jayapura JavaScript User Group";
-const DEFAULT_DESCRIPTION = "Komunitas Pengguna JavaScript di Jayapura, Papua.";
+const DEFAULT_DESCRIPTION = "JavaScript User Community in Jayapura, Papua.";
 
 const {
   title,
@@ -16,7 +16,7 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 const ogImage = new URL(image, Astro.site ?? Astro.url);
-const ogLocale = Astro.currentLocale === 'en' ? 'en_US' : 'id_ID';
+const ogLocale = 'en_US';
 ---
 
 <!-- Global Metadata -->

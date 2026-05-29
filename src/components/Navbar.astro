@@ -1,13 +1,4 @@
 ---
-import { useTranslations } from '@/i18n/translations';
-
-const lang = (Astro.currentLocale ?? 'id') as 'id' | 'en';
-const t = useTranslations(lang);
-const base = lang === 'en' ? '/en' : '';
-const rawPath = Astro.url.pathname;
-const altLangHref = lang === 'id'
-  ? `/en${rawPath}`
-  : rawPath.replace(/^\/en/, '') || '/';
 ---
 
 <header
@@ -18,8 +9,7 @@ const altLangHref = lang === 'id'
     currentPath: window.location.pathname,
     isActive(segment) {
       const p = this.currentPath;
-      const norm = (p === '/en' || p === '/en/') ? '/' : p.startsWith('/en/') ? p.slice(3) : p;
-      return segment === '/' ? (norm === '/' || norm === '') : norm.startsWith(segment);
+      return segment === '/' ? (p === '/' || p === '') : p.startsWith(segment);
     },
     closeMobileNav() { this.mobileNavOpen = false; }
   }"
@@ -42,7 +32,7 @@ const altLangHref = lang === 'id'
     <nav class="flex items-center justify-between gap-3">
       <!-- Logo -->
       <a
-        href={`${base}/`}
+        href="/"
         class="flex items-center group transition-all active:scale-95 outline-none"
       >
         <div class="relative h-10 md:h-12 flex items-center">
@@ -57,37 +47,25 @@ const altLangHref = lang === 'id'
       <!-- Desktop navigation -->
       <div class="hidden md:flex items-center gap-5">
         <a
-          href={`${base}/`}
+          href="/"
           :class="isActive('/') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
           class="px-1 py-2 text-sm font-medium"
-        >{t('nav_home')}</a>
+        >Home</a>
         <a
-          href={`${base}/events`}
+          href="/events"
           :class="isActive('/events') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
           class="px-1 py-2 text-sm font-medium"
-        >{t('nav_events')}</a>
+        >Events</a>
         <a
-          href={`${base}/about`}
+          href="/about"
           :class="isActive('/about') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
           class="px-1 py-2 text-sm font-medium"
-        >{t('nav_about')}</a>
+        >About</a>
         <a
-          href={`${base}/coc`}
+          href="/coc"
           :class="isActive('/coc') ? 'border-b-2 border-yellow-500 text-yellow-500' : 'text-neutral-600 hover:text-yellow-500'"
           class="px-1 py-2 text-sm font-medium"
-        >{t('nav_coc')}</a>
-
-        <!-- Language switcher -->
-        <div class="flex items-center border border-neutral-200 rounded-lg overflow-hidden text-xs font-bold">
-          <a
-            href={lang === 'en' ? altLangHref : rawPath}
-            class={`px-2.5 py-1.5 transition-colors ${lang === 'id' ? 'bg-yellow-400 text-neutral-900' : 'text-neutral-500 hover:text-neutral-900'}`}
-          >ID</a>
-          <a
-            href={lang === 'id' ? altLangHref : rawPath}
-            class={`px-2.5 py-1.5 transition-colors ${lang === 'en' ? 'bg-yellow-400 text-neutral-900' : 'text-neutral-500 hover:text-neutral-900'}`}
-          >EN</a>
-        </div>
+        >Code of Conduct</a>
       </div>
 
       <!-- Mobile menu button -->
@@ -120,26 +98,18 @@ const altLangHref = lang === 'id'
       class="md:hidden absolute left-0 right-0 top-full mt-2 mx-4 bg-white rounded-xl border border-neutral-200 overflow-hidden"
     >
       <nav class="flex flex-col p-2 text-sm">
-        <a href={`${base}/`} @click="closeMobileNav" :class="isActive('/') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
-          <span>{t('nav_home')}</span>
+        <a href="/" @click="closeMobileNav" :class="isActive('/') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
+          <span>Home</span>
         </a>
-        <a href={`${base}/events`} @click="closeMobileNav" :class="isActive('/events') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
-          <span>{t('nav_events')}</span>
+        <a href="/events" @click="closeMobileNav" :class="isActive('/events') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
+          <span>Events</span>
         </a>
-        <a href={`${base}/about`} @click="closeMobileNav" :class="isActive('/about') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
-          <span>{t('nav_about')}</span>
+        <a href="/about" @click="closeMobileNav" :class="isActive('/about') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
+          <span>About</span>
         </a>
-        <a href={`${base}/coc`} @click="closeMobileNav" :class="isActive('/coc') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
-          <span>{t('nav_coc')}</span>
+        <a href="/coc" @click="closeMobileNav" :class="isActive('/coc') ? 'border-l-4 border-yellow-500 text-yellow-700' : 'text-neutral-700 hover:text-yellow-500'" class="flex items-center gap-3 px-4 py-3">
+          <span>Code of Conduct</span>
         </a>
-        <!-- Language switcher in mobile -->
-        <div class="flex items-center gap-2 px-4 py-3 border-t border-neutral-100 mt-1">
-          <span class="text-xs text-neutral-400 font-medium">{t('nav_lang_label')}</span>
-          <div class="flex items-center border border-neutral-200 rounded-lg overflow-hidden text-xs font-bold">
-            <a href={lang === 'en' ? altLangHref : rawPath} class={`px-2.5 py-1 transition-colors ${lang === 'id' ? 'bg-yellow-400 text-neutral-900' : 'text-neutral-500'}`}>ID</a>
-            <a href={lang === 'id' ? altLangHref : rawPath} class={`px-2.5 py-1 transition-colors ${lang === 'en' ? 'bg-yellow-400 text-neutral-900' : 'text-neutral-500'}`}>EN</a>
-          </div>
-        </div>
       </nav>
     </div>
   </div>

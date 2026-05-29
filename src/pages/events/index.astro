@@ -2,12 +2,6 @@
 import Layout from "@/layouts/Layout.astro";
 import { events } from "@/data/events";
 import { Image } from "astro:assets";
-import { useTranslations } from "@/i18n/translations";
-
-const lang = (Astro.currentLocale ?? "id") as "id" | "en";
-const t = useTranslations(lang);
-const base = lang === "en" ? "/en" : "";
-const dateLocale = lang === "en" ? "en-US" : "id-ID";
 
 function isPastEvent(dateString: string): boolean {
   const eventDate = new Date(dateString);
@@ -18,7 +12,7 @@ function isPastEvent(dateString: string): boolean {
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString(dateLocale, {
+  return date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -27,8 +21,8 @@ function formatDate(dateString: string): string {
 ---
 
 <Layout
-  title={lang === "en" ? "Discover Our Upcoming Events" : "Temukan Event Mendatang Kami"}
-  description={lang === "en" ? "Discover the latest workshops, meetups, and conferences related to JavaScript in Jayapura." : "Temukan workshop, meetup, dan konferensi terbaru terkait JavaScript di Jayapura."}
+  title="Discover Our Upcoming Events"
+  description="Discover the latest workshops, meetups, and conferences related to JavaScript in Jayapura."
 >
   <main
     class="relative mx-auto w-full max-w-5xl min-h-screen px-4 sm:px-6 lg:px-8 bg-white"
@@ -37,18 +31,18 @@ function formatDate(dateString: string): string {
       <span
         class="inline-block py-1 px-3 rounded-full bg-amber-50 text-amber-700 text-xs font-medium tracking-wide uppercase mb-4 border border-amber-200"
       >
-        {t('events_badge')}
+        Community Updates
       </span>
       <h1
         class="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 tracking-tight"
       >
-        {t('events_heading_pre')} <span
+        Upcoming <span
           class="bg-gradient-to-tl from-amber-400 to-yellow-500 bg-clip-text text-transparent"
-          >{t('events_heading_highlight')}</span
+          >Events</span
         >
       </h1>
       <p class="mt-4 max-w-xl mx-auto text-neutral-500 leading-relaxed">
-        {t('events_subtitle')}
+        Join us for meetups, workshops, and sharing sessions.
       </p>
     </div>
 
@@ -60,7 +54,7 @@ function formatDate(dateString: string): string {
           return (
             <article>
               <a
-                href={`${base}/events/${event.slug}`}
+                href={`/events/${event.slug}`}
                 class={`group block rounded-2xl overflow-hidden border transition-all duration-200 ${
                   isPast
                     ? "border-neutral-200 hover:border-neutral-300 bg-white hover:shadow-sm"
@@ -85,7 +79,7 @@ function formatDate(dateString: string): string {
                       <div class="absolute top-3 left-3">
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-neutral-900/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider rounded-md">
                           <span class="w-1.5 h-1.5 bg-neutral-400 rounded-full" />
-                          {t('events_badge_ended')}
+                          Event Ended
                         </span>
                       </div>
                     )}
@@ -94,7 +88,7 @@ function formatDate(dateString: string): string {
                       <div class="absolute top-3 left-3">
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider rounded-md">
                           <span class="w-1.5 h-1.5 bg-emerald-300 rounded-full animate-pulse" />
-                          {t('events_badge_open')}
+                          Open
                         </span>
                       </div>
                     )}
@@ -109,15 +103,15 @@ function formatDate(dateString: string): string {
                       </span>
                       {isPast ? (
                         <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-neutral-100 text-neutral-500 rounded border border-neutral-200">
-                          {t('events_status_completed')}
+                          Completed
                         </span>
                       ) : event.registrationStatus ? (
                         <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded border border-emerald-200">
-                          {t('events_status_open')}
+                          Registration Open
                         </span>
                       ) : (
                         <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-neutral-100 text-neutral-500 rounded border border-neutral-200">
-                          {t('events_status_closed')}
+                          Registration Closed
                         </span>
                       )}
                     </div>
@@ -204,7 +198,7 @@ function formatDate(dateString: string): string {
                     <div class="mt-5 pt-5 border-t border-neutral-100 flex items-center justify-between gap-4">
                       {isPast ? (
                         <span class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 group-hover:text-amber-700 transition-colors">
-                          {t('events_cta_recap')}
+                          View recap
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="w-4 h-4 transition-transform group-hover:translate-x-0.5"
@@ -222,7 +216,7 @@ function formatDate(dateString: string): string {
                         </span>
                       ) : event.registrationStatus ? (
                         <span class="inline-flex items-center gap-2 text-sm font-semibold text-yellow-600 group-hover:text-yellow-700 transition-colors">
-                          {t('events_cta_register')}
+                          Register now
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="w-4 h-4 transition-transform group-hover:translate-x-0.5"
@@ -240,7 +234,7 @@ function formatDate(dateString: string): string {
                         </span>
                       ) : (
                         <span class="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 group-hover:text-neutral-500 transition-colors">
-                          {t('events_cta_details')}
+                          View details
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="w-4 h-4 transition-transform group-hover:translate-x-0.5"
@@ -276,7 +270,7 @@ function formatDate(dateString: string): string {
                           </svg>
                           <span>
                             {event.attendees}{" "}
-                            {isPast ? t('events_attended') : t('events_attending')}
+                            {isPast ? "attended" : "attending"}
                           </span>
                         </div>
                       )}
@@ -310,9 +304,9 @@ function formatDate(dateString: string): string {
             </svg>
           </div>
           <h3 class="text-lg font-semibold text-neutral-900 mb-2">
-            {t('events_empty_title')}
+            No events yet
           </h3>
-          <p class="text-neutral-500">{t('events_empty_desc')}</p>
+          <p class="text-neutral-500">Check back soon for upcoming events.</p>
         </div>
       )
     }
